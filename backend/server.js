@@ -7,12 +7,18 @@ import roleRoutes from "./routes/role.route.js";
 import userRoutes from "./routes/users/user.routes.js";
 import driverStatus from "./routes/driver/status.js"
 import passengerRoute from "./routes/passenger.js"
-
+import { updateDriverLocation } from "./routes/driver/location.js";
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors(
+  {
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }
+));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
@@ -20,6 +26,7 @@ app.use("/api/auth", roleRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/driver", driverStatus);
 app.use("/api/passenger",passengerRoute)
+app.use("/api/driver/location",updateDriverLocation)
 
 
 mongoose
@@ -27,6 +34,4 @@ mongoose
   .then(() => console.log("MongoDB connected ✅"))
   .catch(err => console.error(err));
 
-app.listen(3000, () => {
-  console.log("Server running on http://192.168.1.9:3000");
-});
+export default app
