@@ -7,7 +7,7 @@ import roleRoutes from "./routes/role.route.js";
 import userRoutes from "./routes/users/user.routes.js";
 import driverStatus from "./routes/driver/status.js"
 import passengerRoute from "./routes/passenger.js"
-import { updateDriverLocation } from "./routes/driver/location.js";
+import  updateDriverLocation  from "./routes/driver/location.js";
 
 dotenv.config();
 
