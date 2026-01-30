@@ -7,7 +7,7 @@ import roleRoutes from "./routes/role.route.js";
 import userRoutes from "./routes/users/user.routes.js";
 import driverStatus from "./routes/driver/status.js"
 import passengerRoute from "./routes/passenger.js"
-import { updateDriverLocation } from "./routes/driver/location.js";
+import updateDriverLocation  from "./routes/driver/location.js";
 
 dotenv.config();
 
@@ -33,5 +33,8 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected ✅"))
   .catch(err => console.error(err));
+
+  const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 export default app
