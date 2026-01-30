@@ -37,7 +37,6 @@ console.log("Request body:", req.body);
       driverId: driver._id,
       isOnline: driver.isOnline,
     }
-                   console.log("Request body:", req.body);
 );
   } catch (err) {
     console.error("SERVER ERROR:", err);
