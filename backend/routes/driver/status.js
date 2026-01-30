@@ -7,6 +7,7 @@ const router = express.Router();
 router.post("/status", async (req, res) => {
   try {
     const { driverId, isOnline } = req.body;
+console.log("Request body:", req.body);
 
     // Validate input
     if (!driverId || typeof isOnline !== "boolean") {
@@ -35,7 +36,9 @@ router.post("/status", async (req, res) => {
       message: isOnline ? "Driver is ONLINE" : "Driver is OFFLINE",
       driverId: driver._id,
       isOnline: driver.isOnline,
-    });
+    }
+                   console.log("Request body:", req.body);
+);
   } catch (err) {
     console.error("SERVER ERROR:", err);
     return res.status(500).json({ message: "Server error" });
