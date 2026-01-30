@@ -1,4 +1,4 @@
-import User from  "../../models/User"
+import User from  "../../models/User.js"
 export const updateDriverLocation = async(req,res) => {
 const {driverId,lat,lng}= req.body
 if(!driverId || lat == null || lng == null){
