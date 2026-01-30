@@ -9,6 +9,7 @@ import driverStatus from "./routes/driver/status.js"
 import passengerRoute from "./routes/passenger.js"
 import updateDriverLocation  from "./routes/driver/location.js";
 
+
 dotenv.config();
 
 const app = express();
@@ -34,7 +35,9 @@ mongoose
   .then(() => console.log("MongoDB connected ✅"))
   .catch(err => console.error(err));
 
+
   const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 
 export default app
