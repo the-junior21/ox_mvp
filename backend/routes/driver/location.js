@@ -1,6 +1,6 @@
 import User from  "../../models/User.js"
 //jus adding a comment to check 
-
+import express from "express"
 const router = express.Router()
 router.post("/", async(req,res) => {
 const {driverId,lat,lng}= req.body
@@ -20,4 +20,5 @@ try{
     res.status(500).json({message:"server error"})
 }
 })
+export default router
 
