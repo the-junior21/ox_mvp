@@ -8,7 +8,7 @@ import userRoutes from "./routes/users/user.routes.js";
 import driverStatus from "./routes/driver/status.js"
 import passengerRoute from "./routes/passenger.js"
 import updateDriverLocation  from "./routes/driver/location.js";
-import updatePassengerLocation  from "./routes/passenger/location.js";
+import updatePassengerLocation  from "./routes/passengerLocation/location.js";
 
 
 dotenv.config();
