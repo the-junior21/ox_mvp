@@ -1,8 +1,9 @@
 import User from  "../../models/User.js"
 //jus adding a comment to check 
+// a justnwanna ssay nikmok yalli matefhemch  a weld l9e7ab
 import express from "express"
 const router = express.Router()
-router.post("/location", async(req,res) => {
+router.post("/", async(req,res) => {
 const {passengerId,lat,lng}= req.body
 if(!passengerId || lat == null || lng == null){
     return res.status(400).json({message:"missing data"})
