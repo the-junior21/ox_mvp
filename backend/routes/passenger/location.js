@@ -2,7 +2,7 @@ import User from  "../../models/User.js"
 //jus adding a comment to check 
 import express from "express"
 const router = express.Router()
-router.post("/", async(req,res) => {
+router.post("/location", async(req,res) => {
 const {passengerId,lat,lng}= req.body
 if(!passengerId || lat == null || lng == null){
     return res.status(400).json({message:"missing data"})
