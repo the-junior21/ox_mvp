@@ -23,7 +23,7 @@ app.use(cors(
   }
 ));
 app.use(express.json());
-
+//nik mok
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", roleRoutes);
 app.use("/api/users", userRoutes);
@@ -31,7 +31,7 @@ app.use("/api/driver", driverStatus);
 app.use("/api/passenger",passengerRoute)
 app.use("/api/driver/location",updateDriverLocation)
 app.use("/api/passenger/location",updatePassengerLocation)
-app.use("/api/driver/nearby",updatePassengerLocation)
+app.use("/api/driver/nearby",nearbyDrivers)
 
 
 mongoose
