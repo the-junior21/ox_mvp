@@ -9,6 +9,7 @@ import driverStatus from "./routes/driver/status.js"
 import passengerRoute from "./routes/passenger.js"
 import updateDriverLocation  from "./routes/driver/location.js";
 import updatePassengerLocation  from "./routes/passengerLocation/location.js";
+import nearbyDrivers  from "./routes/driver/nearby.js";
 
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use("/api/driver", driverStatus);
 app.use("/api/passenger",passengerRoute)
 app.use("/api/driver/location",updateDriverLocation)
 app.use("/api/passenger/location",updatePassengerLocation)
+app.use("/api/driver/nearby",updatePassengerLocation)
 
 
 mongoose

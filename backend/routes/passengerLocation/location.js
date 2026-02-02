@@ -1,6 +1,5 @@
 import User from  "../../models/User.js"
-//jus adding a comment to check 
-// a justnwanna ssay nikmok yalli matefhemch  a weld l9e7ab
+
 import express from "express"
 const router = express.Router()
 router.post("/", async(req,res) => {
