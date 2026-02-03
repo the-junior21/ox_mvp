@@ -1,29 +1,40 @@
 import express from "express"
 import User from "../../models/User.js"
-const router  = express.Router()
-router.post("/",async(req,res)=>{
-    const {lat,lng} = req.body
+const router = express.Router()
 
-    if(lat == null || lng == null){
-        return res.status(400).json({message:"missing coords"})
+router.post("/find-all-near", async (req, res) => {
+    // 1. Get current position from request
+    const { lat, lng } = req.body
+
+    if (lat == null || lng == null) {
+        return res.status(400).json({ message: "Send lat and lng to search from!" })
     }
-    try{
-        const drivers = await User.find({
-            role:"driver",
-            isOnline:true,
-            location:{
-                $near:{
-                    $geometry:{
-                        type:"Point",
-                        coordinates:[parseFloat(lng),parseFloat(lat)]
+
+    try {
+        // 2. Query for everything within 100km
+        const locations = await User.find({
+            location: {
+                $near: {
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [parseFloat(lng), parseFloat(lat)] // [Longitude, Latitude]
                     },
-                    $maxDistance:10000
+                    $maxDistance: 100000 // 100 kilometers
                 }
             }
-        }).select("name location")
-        res.json(drivers)
-    }catch(err){
-        res.status(500).json({message:err.message})
+        })
+
+        // 3. Return what we found
+        res.json({
+            count: locations.length,
+            results: locations
+        })
+    } catch (err) {
+        res.status(500).json({ 
+            message: "Check if you have a 2dsphere index!", 
+            error: err.message 
+        })
     }
 })
+
 export default router
