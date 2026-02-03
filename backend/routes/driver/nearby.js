@@ -15,7 +15,7 @@ router.post("/",async(req,res)=>{
                 $near:{
                     $geometry:{
                         type:"Point",
-                        coordinates:[lng,lat]
+                        coordinates:[parseFloat(lng),parseFloat(lat)]
                     },
                     $maxDistance:10000
                 }
