@@ -11,7 +11,7 @@ try{
     await User.findByIdAndUpdate(passengerId,{
         location:{
             type:"Point",
-            coordinates:[lng,lat],
+            coordinates:[parseFloat(lng),parseFloat(lat)],
         },
         updatedAt: new Date(),
     })
