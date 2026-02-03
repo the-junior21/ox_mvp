@@ -1,5 +1,5 @@
 import express from "express";
-import TestLocation from "/..models/LocationModel.js";
+import TestLocation from "../models/LocationModel.js";
 const router = express.Router();
 
 // 1. SEED DATA: Run this once to put a point in the DB
