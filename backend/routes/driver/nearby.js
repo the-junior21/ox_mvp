@@ -17,7 +17,7 @@ router.post("/",async(req,res)=>{
                         type:"Point",
                         coordinates:[lng,lat]
                     },
-                    $maxDistance:1000
+                    $maxDistance:10000
                 }
             }
         }).select("name location")
