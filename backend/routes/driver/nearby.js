@@ -13,6 +13,8 @@ router.post("/find-all-near", async (req, res) => {
     try {
         // 2. Query for everything within 100km
         const locations = await User.find({
+            role:"driver",
+            isOnline:true,
             location: {
                 $near: {
                     $geometry: {
