@@ -11,7 +11,7 @@ router.post("/",async(req,res)=>{
         const drivers = await User.find({
             role:"driver",
             isOnline:true,
-            /*location:{
+            location:{
                 $near:{
                     $geometry:{
                         type:"Point",
@@ -19,7 +19,7 @@ router.post("/",async(req,res)=>{
                     },
                     $maxDistance:10000
                 }
-            }*/
+            }
         }).select("name location")
         res.json(drivers)
     }catch(err){
