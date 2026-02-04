@@ -20,7 +20,6 @@ const UserSchema = new mongoose.Schema(
       type: {
         type: String,
         enum: ["Point"],
-        default: "Point",
       },
       coordinates: {
         type: [Number], // [lng, lat]
@@ -32,7 +31,14 @@ const UserSchema = new mongoose.Schema(
 );
 
 // 🔥 THIS index is now VALID
-UserSchema.index({ location: "2dsphere" });
+UserSchema.index(
+  { location: "2dsphere" },
+  {
+    partialFilterExpression: {
+      "location.coordinates": { $exists: true },
+    },
+  }
+);
 
 export default mongoose.models.User ||
   mongoose.model("User", UserSchema);
