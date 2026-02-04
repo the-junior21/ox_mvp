@@ -37,6 +37,7 @@ router.post("/signup", async (req, res) => {
      });
 
   } catch (err) {
+    console.error(err)
     if (err.code === 11000)
       return res.status(400).json({ message: "Numebr exists" });
 
