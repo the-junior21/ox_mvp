@@ -31,7 +31,6 @@ app.use("/api/passenger",passengerRoute)
 app.use("/api/driver/location",updateDriverLocation)
 app.use("/api/passenger/location",updatePassengerLocation)
 app.use("/api/driver/nearby",nearbyDrivers)
-app.use("/api/nearby",testLocation)
 
 
 mongoose
