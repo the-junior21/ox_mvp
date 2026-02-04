@@ -10,7 +10,6 @@ import passengerRoute from "./routes/passenger.js"
 import updateDriverLocation  from "./routes/driver/location.js";
 import updatePassengerLocation  from "./routes/passengerLocation/location.js";
 import nearbyDrivers  from "./routes/driver/nearby.js";
-import testLocation  from "./routes/testLocation.js";
 
 
 dotenv.config();
@@ -24,7 +23,6 @@ app.use(cors(
   }
 ));
 app.use(express.json());
-//nik mok
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", roleRoutes);
 app.use("/api/users", userRoutes);

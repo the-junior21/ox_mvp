@@ -17,7 +17,10 @@ router.post("/signup", async (req, res) => {
 
     const user = await User.findOneAndUpdate(
       {number:number.trim()},        // update fields
-      {name:name.trim()},
+      {
+        $set:{name:name.trim()},
+        $setOnInsert:{number:number.trim()},
+      },
       {
         new: true,                    // return updated doc
         upsert: true,                 // create if not exists
