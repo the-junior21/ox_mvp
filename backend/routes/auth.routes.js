@@ -15,21 +15,21 @@ router.post("/signup", async (req, res) => {
   try {
    // const hashed = await bcrypt.hash(password, 10);
 
-    const user = await User.findOneAndUpdate(
-      {number:number.trim()},        // update fields
-      {
-        $set:{name:name.trim()},
-        $setOnInsert:{number:number.trim()},
-      },
-      {
-        new: true,                    // return updated doc
-        upsert: true,                 // create if not exists
-        setDefaultsOnInsert: true,
+    let user = await User.findOne( {number:number.trim()})
+      if(!user){
+        user = await User.create({
+          name:name.trim(),
+          number:number.trim(),
+        })
+      }else{
+        user.name=name.trim()
+        await user.save()
       }
+    
       //email,
       //password: hashed,
       //role : role || null,
-    );
+    ;
 
     res.status(201).json({
       message: "User created",
