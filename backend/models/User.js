@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema(
       },
       coordinates: {
         type: [Number], // [lng, lat]
-        required: true,
+        required: false,
       },
     },
   },
