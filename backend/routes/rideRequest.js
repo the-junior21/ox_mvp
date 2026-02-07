@@ -1,20 +1,28 @@
 import express from "express"
-import rideSchema from "../models/rideSchema.js"
+import Ride from "../models/rideSchema.js"
 const router = express.Router()
 router.post("/",async(req,res)=>{
     try{
-        const {passengerId ,depart,destination,lat,lng} = req.body
-        if(!passengerId || !depart || !destination || !lat || !lng){
+        const {passengerId ,depart,destination,pickupLocation} = req.body
+        if(
+            !passengerId || 
+            !depart || 
+            !destination || 
+            !pickupLocation?.lat || !pickupLocation?.lng
+        ){
             return res.status(400).json({
                 message:"Missing required fields",
             })
         }
+        const {lat , lng} = pickupLocation;
+
         const ride = await Ride.create({
             passenger : passengerId,
             pickup:{
                 name:depart,
                 location:{
-                    coordinates:[lng,lat],
+                    type:"Point",
+                    coordinates:[pickupLocation.lng,pickupLocation.lat],
                 },
             },
             destination:{
