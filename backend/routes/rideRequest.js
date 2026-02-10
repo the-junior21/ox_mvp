@@ -35,6 +35,28 @@ router.post("/",async(req,res)=>{
             rideId:ride._id,
             status:ride.status,
         })
+        const drivers = await User.find({
+                    role:"driver",
+                    isOnline:true,
+                    location: {
+                        $near: {
+                            $geometry: {
+                                type: "Point",
+                                coordinates: [parseFloat(lng), parseFloat(lat)] // [Longitude, Latitude]
+                            },
+                            $maxDistance: 100000 // 100 kilometers
+                        }
+                    }
+                })
+                drivers.forEach(driver =>{
+                            const socketId = onlineDrivers.get(driver._id.toString())
+                            if(socketId){
+                                io.to(socketId).emit("new_ride_request",{
+                                    rideId,
+                                    passengerLocation:{lat,lng}
+                                })
+                            }
+                        })
     }catch(error){
         console.error("Ride Request Error: ",error)
         res.status(500).json({
