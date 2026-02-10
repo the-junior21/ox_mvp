@@ -13,7 +13,7 @@ import nearbyDrivers  from "./routes/driver/nearby.js";
 import rideRequest  from "./routes/rideRequest.js";
 import rideRequestId from "./routes/rideRequestId/:id.js"
 import {createServer} from "http"
-import {server} from "socket.io"
+import {Server} from "socket.io"
 
 
 const httpServer = createServer(app)
@@ -34,7 +34,7 @@ io.on("connection",(socket)=>{
     onlineDrivers.set(driverId,socket.id)
   })
   socket.on("passenger_online",(passengerId)=>{
-    onlineDrivers.set(passengerId,socket.id)
+    onlinePassengers.set(passengerId,socket.id)
   })
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
@@ -43,8 +43,6 @@ io.on("connection",(socket)=>{
     [...onlinePassengers].forEach(([id, sId]) => sId === socket.id && onlinePassengers.delete(id));
   });
 })
-export { io };
-httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`));++
 
 dotenv.config();
 
@@ -76,7 +74,8 @@ mongoose
 
 
   const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
+export { io, onlineDrivers, onlinePassengers };
 
 export default app
