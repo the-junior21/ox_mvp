@@ -59,7 +59,7 @@ router.post("/",async(req,res)=>{
                             const socketId = onlineDrivers.get(driver._id.toString())
                             if(socketId){
                                 io.to(socketId).emit("new_ride_request",{
-                                    rideId,
+                                    rideId :ride._id,
                                     pickup: { name: depart, location: { lat, lng } },
                                     destination: { name: destination }
                                 })
