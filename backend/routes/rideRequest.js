@@ -1,5 +1,8 @@
 import express from "express"
 import Ride from "../models/rideSchema.js"
+import {io,onlineDrivers} from "../server.js"
+import User from "../models/User.js"
+
 const router = express.Router()
 router.post("/",async(req,res)=>{
     try{
@@ -47,16 +50,23 @@ router.post("/",async(req,res)=>{
                             $maxDistance: 100000 // 100 kilometers
                         }
                     }
-                })
+                })    
+                console.log("Drivers found:", drivers.length);
+
+                console.log("Online drivers map:", onlineDrivers);
+
                 drivers.forEach(driver =>{
                             const socketId = onlineDrivers.get(driver._id.toString())
                             if(socketId){
                                 io.to(socketId).emit("new_ride_request",{
                                     rideId,
-                                    passengerLocation:{lat,lng}
+                                    pickup: { name: depart, location: { lat, lng } },
+                                    destination: { name: destination }
                                 })
+                                  console.log("Driver:", driver._id.toString(), "Socket:", socketId);
                             }
-                        })
+                        
+})
     }catch(error){
         console.error("Ride Request Error: ",error)
         res.status(500).json({

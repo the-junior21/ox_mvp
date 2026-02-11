@@ -15,6 +15,16 @@ import rideRequestId from "./routes/rideRequestId/:id.js"
 import {createServer} from "http"
 import {Server} from "socket.io"
 
+dotenv.config();
+
+const app = express();
+app.use(cors(
+  {
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }
+));
 
 const httpServer = createServer(app)
 const io = new Server(httpServer,{
@@ -32,9 +42,13 @@ io.on("connection",(socket)=>{
 
   socket.on("driver_online",(driverId)=>{
     onlineDrivers.set(driverId,socket.id)
+      console.log("✅ Driver ONLINE:", driverId, socket.id);
+
   })
   socket.on("passenger_online",(passengerId)=>{
     onlinePassengers.set(passengerId,socket.id)
+      console.log("✅ passenger ONLINE:", passengerId, socket.id);
+
   })
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
@@ -44,16 +58,8 @@ io.on("connection",(socket)=>{
   });
 })
 
-dotenv.config();
 
-const app = express();
-app.use(cors(
-  {
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }
-));
+
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", roleRoutes);
