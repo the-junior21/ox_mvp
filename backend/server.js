@@ -45,8 +45,13 @@ io.on("connection", (socket) => {
     try {
       const ride = await Ride.findById(rideId);
       console.log("Looking for passenger:", ride.passengerId.toString());
-console.log("Online passengers:", onlinePassengers);
-console.log("Found socket:", passengerSocketId);
+      console.log("Online passengers:", onlinePassengers);
+      console.log("Found socket:", passengerSocketId);
+
+      socket.on("register_passenger", (passengerId) => {
+        onlinePassengers.set(passengerId, socket.id);
+        console.log("Passenger registered:", passengerId);
+      });
 
       if (!ride) return;
       if (ride.status !== "SEARCHING") {
@@ -54,7 +59,7 @@ console.log("Found socket:", passengerSocketId);
         return;
       }
       const passengerSocketId = onlinePassengers.get(
-        ride.passengerId.toString()
+        ride.passengerId.toString(),
       );
       if (passergerSocketId) {
         io.to(passengerSocketId).emit("ride_accepted", {
