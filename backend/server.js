@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
         return;
       }
       const passengerSocketId = onlinePassengers.get(
-        ride.passengerId.toString(),
+        ride.passengerId.toString()
       );
       if (passergerSocketId) {
         io.to(passengerSocketId).emit("ride_accepted", {
