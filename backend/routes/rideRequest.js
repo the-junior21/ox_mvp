@@ -20,7 +20,7 @@ router.post("/",async(req,res)=>{
         const {lat , lng} = pickupLocation;
 
         const ride = await Ride.create({
-            passenger : passengerId,
+            passengerId : passengerId,
             pickup:{
                 name:depart,
                 location:{
