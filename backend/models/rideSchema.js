@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 const RideSchema = new mongoose.Schema(
     {
-        passenger :{
+        passengerId :{
             type:mongoose.Schema.Types.ObjectId,
             ref:"User",
             required:true,
