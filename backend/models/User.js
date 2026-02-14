@@ -15,7 +15,6 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
     location: {
       type: {
         type: String,
@@ -26,6 +25,11 @@ const UserSchema = new mongoose.Schema(
         required: false,
       },
     },
+    status:{
+      type:String,
+      enum:["ON_TRIP","OFF_TRIP"],
+      default:"OFF_TRIP"
+    }
   },
   { timestamps: true }
 );
