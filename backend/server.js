@@ -44,6 +44,9 @@ io.on("connection", (socket) => {
   socket.on("accept_ride", async ({ driverId, rideId }) => {
     try {
       const ride = await Ride.findById(rideId);
+      console.log("Looking for passenger:", ride.passengerId.toString());
+console.log("Online passengers:", onlinePassengers);
+console.log("Found socket:", passengerSocketId);
 
       if (!ride) return;
       if (ride.status !== "SEARCHING") {
