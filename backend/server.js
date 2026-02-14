@@ -41,48 +41,52 @@ const onlinePassengers = new Map();
 
 io.on("connection", (socket) => {
   console.log("A user connected: ", socket.id);
+
   socket.on("accept_ride", async ({ driverId, rideId }) => {
     try {
       const ride = await Ride.findById(rideId);
-      console.log("Looking for passenger:", ride.passengerId.toString());
-      console.log("Online passengers:", onlinePassengers);
-      console.log("Found socket:", passengerSocketId);
-
-      socket.on("register_passenger", (passengerId) => {
-        onlinePassengers.set(passengerId, socket.id);
-        console.log("Passenger registered:", passengerId);
-      });
-
       if (!ride) return;
+
       if (ride.status !== "SEARCHING") {
         console.log("already taken");
         return;
       }
+
       const passengerSocketId = onlinePassengers.get(
         ride.passengerId.toString(),
       );
-      if (passergerSocketId) {
+
+      console.log("Looking for passenger:", ride.passengerId.toString());
+      console.log("Found socket:", passengerSocketId);
+
+      if (passengerSocketId) {
         io.to(passengerSocketId).emit("ride_accepted", {
           rideId: ride._id,
           driverId,
         });
       }
+
       socket.emit("ride_confirmed", {
         rideId: ride._id,
       });
+
       await User.findByIdAndUpdate(driverId, {
         status: "ON_TRIP",
       });
-      // assign the driver
+
       ride.status = "ACCEPTED";
       ride.driverId = driverId;
       await ride.save();
-      console.log("ride accepted by ", driverId);
+
+      console.log("ride accepted by", driverId);
     } catch (error) {
       console.log(error);
     }
   });
-
+  socket.on("register_passenger", (passengerId) => {
+    onlinePassengers.set(passengerId, socket.id);
+    console.log("Passenger registered:", passengerId);
+  });
   socket.on("driver_online", (driverId) => {
     onlineDrivers.set(driverId, socket.id);
     console.log("✅ Driver ONLINE:", driverId, socket.id);
