@@ -40,7 +40,7 @@ const onlinePassengers = new Map()
 
 io.on("connection",(socket)=>{
   console.log("A user connected: ",socket.id)
-  Socket.on("accept_ride",async ({driverId,rideId})=>{
+  socket.on("accept_ride",async ({driverId,rideId})=>{
     try{
       const ride = await Ride.findById(rideId)
   
