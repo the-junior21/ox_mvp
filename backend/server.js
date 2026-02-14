@@ -14,6 +14,7 @@ import rideRequest  from "./routes/rideRequest.js";
 import rideRequestId from "./routes/rideRequestId/:id.js"
 import {createServer} from "http"
 import {Server} from "socket.io"
+import Ride from "./models/rideSchema.js"
 
 dotenv.config();
 
@@ -39,6 +40,26 @@ const onlinePassengers = new Map()
 
 io.on("connection",(socket)=>{
   console.log("A user connected: ",socket.id)
+  Socket.on("accept_ride",async ({driverId,rideId})=>{
+    try{
+      const ride = await Ride.findById(rideId)
+  
+      if(!ride) return;
+      if(ride.status !== "SEARCHING" ){
+        console.log("already taken")
+        return
+      }
+      // assign the driver
+      ride.status = "ACCEPTED"
+      ride.driverId = driverId
+      await ride.save()
+      console.log("ride accepted by ",driverId)
+
+    }catch(error){
+      console.log(error)
+
+    }
+  })
 
   socket.on("driver_online",(driverId)=>{
     onlineDrivers.set(driverId,socket.id)
