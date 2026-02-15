@@ -21,7 +21,7 @@ router.post("/",async(req,res)=>{
 
         const ride = await Ride.create({
             passengerId : passengerId,
-            pickup:{
+            pickupLocation:{
                 name:depart,
                 location:{
                     type:"Point",
@@ -60,7 +60,7 @@ router.post("/",async(req,res)=>{
                             if(socketId){
                                 io.to(socketId).emit("new_ride_request",{
                                     rideId :ride._id,
-                                    pickup: { name: depart, location: { lat, lng } },
+                                    pickupLocation: { name: depart, location: { lat, lng } },
                                     destination: { name: destination }
                                 })
                                   console.log("Driver:", driver._id.toString(), "Socket:", socketId);

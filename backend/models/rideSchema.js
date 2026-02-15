@@ -12,7 +12,7 @@ const RideSchema = new mongoose.Schema(
             ref:"User",
             default:null,
         },
-        pickup:{
+        pickupLocation:{
             name:String,
             location:{
                 type:{

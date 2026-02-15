@@ -45,6 +45,9 @@ io.on("connection", (socket) => {
   socket.on("accept_ride", async ({ driverId, rideId }) => {
     try {
       const ride = await Ride.findById(rideId);
+      const passenger = await User.findById(ride.passengerId)
+      console.log("passenger fetched : ",passenger?.number)
+      console.log("pickup location : ",ride.pickupLocation)
       if (!ride) return;
 
       if (ride.status !== "SEARCHING") {
@@ -68,6 +71,10 @@ io.on("connection", (socket) => {
 
       socket.emit("ride_confirmed", {
         rideId: ride._id,
+        passengerPhone:
+        passenger.number,
+        pickupLocation:
+        ride.pickupLocation
       });
 
       await User.findByIdAndUpdate(driverId, {
