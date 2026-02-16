@@ -102,6 +102,13 @@ io.on("connection", (socket) => {
     onlinePassengers.set(passengerId, socket.id);
     console.log("✅ passenger ONLINE:", passengerId, socket.id);
   });
+  socket.on("ride_completed",async({rideId,driverId}) =>{
+    const ride = await Ride.findById(rideId)
+    if(!ride) return;
+    ride.status = "COMPLETED"
+
+    await ride.save()
+  })
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
     // Remove from maps
@@ -112,6 +119,7 @@ io.on("connection", (socket) => {
       ([id, sId]) => sId === socket.id && onlinePassengers.delete(id),
     );
   });
+  
 });
 
 app.use(express.json());
