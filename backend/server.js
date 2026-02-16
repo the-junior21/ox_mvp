@@ -106,8 +106,17 @@ io.on("connection", (socket) => {
     const ride = await Ride.findById(rideId)
     if(!ride) return;
     ride.status = "COMPLETED"
-
     await ride.save()
+    await User.findByIdAndUpdate(driverId,{
+      status : "OFF_TRIP"
+    })
+    io.to(ride.passegerId.toString()).emit("ride_completed",{rideId})
+  })
+  socket.on("cancel_ride",async({rideId,passengerId})=>{
+    const ride = await Ride.findById(rideId)
+    if(!ride) return
+    ride.status = "CANCELLED"
+    io.emit("ride_cancelled",{rideId})
   })
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
