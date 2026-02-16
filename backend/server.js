@@ -46,6 +46,7 @@ io.on("connection", (socket) => {
     try {
       const ride = await Ride.findById(rideId);
       const passenger = await User.findById(ride.passengerId)
+      const driver = await User.findById(ride.driverId)
       console.log("passenger fetched : ",passenger?.number)
       console.log("pickup location : ",ride.pickupLocation)
       if (!ride) return;
@@ -66,8 +67,11 @@ io.on("connection", (socket) => {
         io.to(passengerSocketId).emit("ride_accepted", {
           rideId: ride._id,
           driverId,
+          driverPhone: driver?.number
+
         });
       }
+
 
       socket.emit("ride_confirmed", {
         rideId: ride._id,
