@@ -36,12 +36,7 @@ const UserSchema = new mongoose.Schema(
 
 // 🔥 THIS index is now VALID
 UserSchema.index(
-  { location: "2dsphere" },
-  {
-    partialFilterExpression: {
-      "location.coordinates": { $exists: true },
-    },
-  }
+  { location: "2dsphere" }
 );
 
 export default mongoose.models.User ||
