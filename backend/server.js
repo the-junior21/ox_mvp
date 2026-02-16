@@ -119,10 +119,11 @@ io.on("connection", (socket) => {
     })
     io.to(ride.passegerId.toString()).emit("ride_completed",{rideId})
   })
-  socket.on("cancel_ride",async({rideId,passengerId})=>{
+  socket.on("cancel_ride",async({rideId})=>{
     const ride = await Ride.findById(rideId)
     if(!ride) return
     ride.status = "CANCELLED"
+    await ride.save()
     io.emit("ride_cancelled",{rideId})
   })
   socket.on("disconnect", () => {
