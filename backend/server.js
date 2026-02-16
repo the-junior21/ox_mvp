@@ -71,6 +71,9 @@ io.on("connection", (socket) => {
 
         });
       }
+      console.log("passenger map",onlinePassengers)
+      console.log("ride passenger",ride.passengerId.toString())
+      console.log("found socket",passengerSocketId)
 
 
       socket.emit("ride_confirmed", {
