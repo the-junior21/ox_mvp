@@ -15,7 +15,7 @@ function getDistanceKm(lat1,lng1,lat2,lng2){
     return R * c
 
 }
-router.post("/find-all-near", async (req, res) => {
+router.post("/", async (req, res) => {
     // 1. Get current position from request
     const { lat, lng,rideId } = req.body
 
