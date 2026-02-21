@@ -40,9 +40,9 @@ router.post("/", async (req, res) => {
                 driverLat,
                 driverLng
             )
-            distance <= 100
+            return distance <= 100
         })
-        drivers.forEach(driver =>{
+        /*drivers.forEach(driver =>{
             const socketId = onlineDrivers.get(driver._id.toString())
             if(socketId){
                 io.to(socketId).emit("new_ride_request",{
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
                     passengerLocation:{lat,lng}
                 })
             }
-        })
+        })*/
 
 
         // 3. Return what we found
