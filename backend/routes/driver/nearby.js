@@ -28,12 +28,13 @@ router.post("/", async (req, res) => {
         const drivers = await User.find({
             role:"driver",
             isOnline:true,
-            "location.coordinates.0":{$exists:true},
-            "location.coordinates.1":{$exists:true}
+            "location.lat":{$exists:true},
+            "location.lng":{$exists:true}
         })
         const nearbyDrivers = drivers.filter(driver =>{
-            if(!driver.location || !driver.location.coordinates) return false
-            const [driverLng,driverLat] = driver.location.coordinates
+            if(!driver.location) return false
+            const driverLat = driver.location.lat
+            const driverLng = driver.location.lng
             const distance = getDistanceKm(
                 lat,
                 lng,
