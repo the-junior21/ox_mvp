@@ -10,8 +10,8 @@ if(!driverId || lat == null || lng == null){
 try{
     await User.findByIdAndUpdate(driverId,{
         location:{
-            type:"Point",
-            coordinates:[lng,lat],
+            lat:lat,
+            lng:lng,
         },
         updatedAt: new Date(),
     })
