@@ -117,7 +117,7 @@ io.on("connection", (socket) => {
     await User.findByIdAndUpdate(driverId,{
       status : "OFF_TRIP"
     })
-    io.to(ride.passegerId.toString()).emit("ride_completed",{rideId})
+    io.to(ride.passengerId.toString()).emit("ride_completed",{rideId})
   })
   socket.on("cancel_ride",async({rideId})=>{
     const ride = await Ride.findById(rideId)
