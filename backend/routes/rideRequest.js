@@ -44,11 +44,7 @@ router.post("/",async(req,res)=>{
             },
             status:"SEARCHING",
         })
-        res.status(201).json({
-            message:"Ride request created",
-            rideId:ride._id,
-            status:ride.status,
-        })
+
         const drivers = await User.find({
                     role:"driver",
                     isOnline:true,
@@ -87,9 +83,10 @@ router.post("/",async(req,res)=>{
                             }
                         
 })
-res.json({
-            count: nearbyDrivers.length,
-            results: nearbyDrivers
+        res.status(201).json({
+            message:"Ride request created",
+            rideId:ride._id,
+            status:ride.status,
         })
     }catch(error){
         console.error("Ride Request Error: ",error)
