@@ -122,7 +122,7 @@ io.on("connection", (socket) => {
       ride.passengerId.toString(),
     )
     if(passengerSocketId){
-      io.to().emit("ride_completed",{
+      io.to(passengerSocketId).emit("ride_completed",{
         rideId
       })
     }
