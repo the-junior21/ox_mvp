@@ -109,23 +109,27 @@ io.on("connection", (socket) => {
     onlinePassengers.set(passengerId, socket.id);
     console.log("✅ passenger ONLINE:", passengerId, socket.id);
   });
-  socket.on("ride_completed",async({rideId,driverId}) =>{
-    const ride = await Ride.findById(rideId)
-    if(!ride) return;
-    ride.status = "COMPLETED"
-    await ride.save()
-    await User.findByIdAndUpdate(driverId,{
-      status : "OFF_TRIP"
-    })
-    const passenger = await User.findById(ride.passengerId)
-    const passengerSocketId = onlinePassengers.get(
-      ride.passengerId.toString(),
-    )
-    if(passengerSocketId){
-      io.to(passengerSocketId).emit("ride_completed",{
-        rideId
+  socket.on("ride_completed",async({driverId,rideId}) =>{
+    try{
+      const ride = await Ride.findById(rideId)
+      const passenger = await User.findById(ride.passengerId)
+      const driver = await User.findById(ride.driverId)
+      if(!ride) return;
+      ride.status = "COMPLETED"
+      await ride.save()
+      await User.findByIdAndUpdate(driverId,{
+        status : "OFF_TRIP"
       })
-    }
+      const passengerSocketId = onlinePassengers.get(
+        ride.passengerId.toString(),
+      )
+      if(passengerSocketId){
+        io.to(passengerSocketId).emit("ride_completed",{
+          rideId:ride._id,
+        })
+      }
+    }catch(error){
+      console.log(error)    }
   })
   socket.on("cancel_ride",async({rideId})=>{
     const ride = await Ride.findById(rideId)
