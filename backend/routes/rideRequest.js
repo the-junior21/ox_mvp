@@ -2,6 +2,7 @@ import express from "express"
 import Ride from "../models/rideSchema.js"
 import {io,onlineDrivers} from "../server.js"
 import User from "../models/User.js"
+import fetch from 'node-fetch'
 
 const router = express.Router()
 
@@ -68,6 +69,24 @@ router.post("/",async(req,res)=>{
             return distance <= 100
         })
         console.log("nearby drivers : ",nearbyDrivers.length)
+        async function
+        sendPushNotification(expoPushToken,title,body,data = {})
+        {
+            await fetch("https://exp.host/--/api/v2/push/send",{
+          method:"POST",
+          headers:{
+            Accept:"application/json",
+            "Content-Type":"application/json",
+          },
+          body:JSON.stringify({
+            to:expoPushToken,
+            sound:'default',
+            title,
+            body,
+            data,
+          }),
+        })
+        }
 
 
 
@@ -80,6 +99,13 @@ router.post("/",async(req,res)=>{
                                     destination: { name: destination }
                                 })
                                   console.log("Driver:", driver._id.toString(), "Socket:", socketId);
+                            }
+                            if(driver.pushToken){
+                                sendPushNotification(
+                                    driver.pushToken,
+                                    'New Ride Request',
+                                    `Pickup at ${depart}, destination ${destination}`,{rideId:ride._id}
+                                )
                             }
                         
 })

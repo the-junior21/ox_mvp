@@ -12,10 +12,13 @@ import updatePassengerLocation from "./routes/passengerLocation/location.js";
 import nearbyDrivers from "./routes/driver/nearby.js";
 import rideRequest from "./routes/rideRequest.js";
 import rideRequestId from "./routes/rideRequestId/:id.js";
+import saveDriverPushToken from './routes/driver/savePushToken.js'
 import { createServer } from "http";
 import { Server } from "socket.io";
 import Ride from "./models/rideSchema.js";
 import User from "./models/User.js";
+import savePushToken from "./routes/users/savePushToken.js"
+
 
 dotenv.config();
 
@@ -50,6 +53,20 @@ io.on("connection", (socket) => {
       console.log("passenger fetched : ",passenger?.number)
       console.log("pickup location : ",ride.pickupLocation)
       if (!ride) return;
+      if(passenger?.psuhToken){
+        await fetch("https://exp.host/--/api/v2/push/send",{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+          },
+          body:JSON.stringify({
+            to:passenger.pushToken,
+            title:"Driver found",
+            body:"your driver is on the way",
+          }),
+        })
+      }
+      
 
       if (ride.status !== "SEARCHING") {
         console.log("already taken");
@@ -115,6 +132,19 @@ io.on("connection", (socket) => {
       const passenger = await User.findById(ride.passengerId)
       const driver = await User.findById(ride.driverId)
       if(!ride) return;
+      if(passenger?.pushToken){
+        await fetch("https://exp.host/--/api/v2/push/send",{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+          },
+          body:JSON.stringify({
+            to:passenger.pushToken,
+            title:"ride completed",
+            body:"thanks for using ox",
+          }),
+        })
+      }
       ride.status = "COMPLETED"
       await ride.save()
       await User.findByIdAndUpdate(driverId,{
@@ -162,6 +192,9 @@ app.use("/api/passenger/location", updatePassengerLocation);
 app.use("/api/driver/nearby", nearbyDrivers);
 app.use("/api/routes/rideRequest", rideRequest);
 app.use("/api/routes/rideRequestId", rideRequestId);
+app.use("/api/users", savePushToken);
+app.use("/api/driver/savePushToken", saveDriverPushToken);
+
 
 mongoose
   .connect(process.env.MONGO_URI)

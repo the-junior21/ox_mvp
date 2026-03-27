@@ -23,7 +23,11 @@ const UserSchema = new mongoose.Schema(
       type:String,
       enum:["ON_TRIP","OFF_TRIP"],
       default:"OFF_TRIP"
+    },
+    pushToken:{
+      type:String,
     }
+
   },
   { timestamps: true }
 );
