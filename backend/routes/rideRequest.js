@@ -80,7 +80,7 @@ router.post("/",async(req,res)=>{
           },
           body:JSON.stringify({
             to:expoPushToken,
-            sound:'default',
+            sound:'not.wav',
             title,
             body,
             data,
