@@ -193,7 +193,7 @@ io.on("connection", (socket) => {
     // Remove from maps
     [...onlineDrivers].forEach(
       ([id, sId]) => sId === socket.id && onlineDrivers.delete(id),
-    );
+    );//gggggg
     [...onlinePassengers].forEach(
       ([id, sId]) => sId === socket.id && onlinePassengers.delete(id),
     );
