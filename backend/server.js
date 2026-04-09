@@ -17,10 +17,30 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import Ride from "./models/rideSchema.js";
 import User from "./models/User.js";
-import savePushToken from "./routes/users/savePushToken.js"
+import savePushToken from "./routes/users/savePushTokenn.js"
+import fetch from "node-fetch"
 
 
 dotenv.config();
+const sendPushNotification = async(expoPushToken,title,body,data = {}) =>{
+  try{
+await fetch("https://exp.host/--/api/v2/push/send",{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+          },
+          body:JSON.stringify({
+            to:expoPushToken,
+            sound:"default",
+            title,
+            body,
+            data,
+          }),
+        })
+        }catch(err){
+    console.log("error sending push not ",err)
+  }
+}
 
 const app = express();
 app.use(
