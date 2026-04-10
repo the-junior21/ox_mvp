@@ -2,7 +2,7 @@ import express from "express"
 import User from "../../models/User.js"
 
 const router = express.Router()
-router.post("/save-push-token",async(req,res)=>{
+router.post("/savePushToken",async(req,res)=>{
     const{userId,pushToken} = req.body
     try{
         await User.findByIdAndUpdate(userId,{

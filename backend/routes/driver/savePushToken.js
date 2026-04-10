@@ -3,15 +3,22 @@ import User from '../../models/User.js'
 
 
 const router = express.Router()
-router.post("/savePushToken",async(req,res)=>{
+router.post("/save-push-token",async(req,res)=>{
     
     try{
-        const {driverId,pushToken} = req.body
-        if(!driverId || !pushToken){
+        const {userId,pushToken} = req.body
+        console.log("incoming req")
+        console.log("userId ",userId)
+        console.log("push token ",pushToken)
+        if(!userId || !pushToken){
             return res.status(400).json({message:'Missing fields'})
         }
-        await User.findByIdAndUpdate(driverId,{pushToken})
-        res.status(200).json({message:'Push token saved'})
+        const updatedUser = await User.findByIdAndUpdate(userId,{pushToken})
+        if(!updatedUser){
+            return res.status(404).json({error:"user not found"})
+        }
+        console.log("token saved for user: ",updatedUser._id)
+        res.status(200).json({message:'Push token saved ',user:updatedUser,})
     }catch(error){
         console.error(error)
         res.status(500).json({message:'Server error'})

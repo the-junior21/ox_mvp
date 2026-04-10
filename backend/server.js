@@ -213,7 +213,7 @@ app.use("/api/driver/nearby", nearbyDrivers);
 app.use("/api/routes/rideRequest", rideRequest);
 app.use("/api/routes/rideRequestId", rideRequestId);
 app.use("/api/users", savePushToken);
-app.use("/api/driver/savePushToken", saveDriverPushToken);
+app.use("/api/users", saveDriverPushToken);
 
 
 mongoose
