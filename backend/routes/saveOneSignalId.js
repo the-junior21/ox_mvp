@@ -18,3 +18,4 @@ router.post ("/api/save-onesignal-id",async (req,res)=>{
         res.status(500).json({error:"server error"})
     }
 })
+export default router
