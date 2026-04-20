@@ -13,6 +13,7 @@ import nearbyDrivers from "./routes/driver/nearby.js";
 import rideRequest from "./routes/rideRequest.js";
 import rideRequestId from "./routes/rideRequestId/:id.js";
 import saveDriverPushToken from './routes/driver/savePushToken.js'
+import saveOneSignalId from "./routes/saveOneSignalId.js"
 import { createServer } from "http";
 import { Server } from "socket.io";
 import Ride from "./models/rideSchema.js";
@@ -214,6 +215,7 @@ app.use("/api/routes/rideRequest", rideRequest);
 app.use("/api/routes/rideRequestId", rideRequestId);
 app.use("/api/users", savePushToken);
 app.use("/api/users", saveDriverPushToken);
+app.use("/api/save-onesignal-id", saveOneSignalId);
 
 
 mongoose

@@ -26,7 +26,8 @@ const UserSchema = new mongoose.Schema(
     },
     pushToken:{
       type:String,
-    }
+    },
+    oneSignalId:{type:String}
 
   },
   { timestamps: true }
