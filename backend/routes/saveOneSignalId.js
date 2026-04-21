@@ -8,7 +8,7 @@ router.post ("/api/save-onesignal-id",async (req,res)=>{
         if(!userId || !oneSignalId){
             return res.status(400).json({error:"Missing data"})
         }
-        const driver = await Driver.findOneAndUpdate({userId:userId},{oneSignalId:oneSignalId},{new:true})
+        const driver = await Driver.findByIdAndUpdate({userId:userId},{oneSignalId:oneSignalId},{new:true})
         console.log("Body: ",req.body)
         const driverid = await Driver.findById(userId)
         console.log("friver ",driverid)
