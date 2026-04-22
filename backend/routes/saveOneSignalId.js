@@ -2,7 +2,7 @@ import Driver from "../models/User.js";
 import express from "express";
 const router = express.Router();
 
-router.post ("/api/save-onesignal-id",async (req,res)=>{
+router.post ("/",async (req,res)=>{
     try{
         const {userId,oneSignalId} = req.body
         if(!userId || !oneSignalId){
