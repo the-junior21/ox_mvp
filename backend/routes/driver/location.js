@@ -3,12 +3,12 @@ import User from  "../../models/User.js"
 import express from "express"
 const router = express.Router()
 router.post("/", async(req,res) => {
-const {driverId,lat,lng}= req.body
-if(!driverId || lat == null || lng == null){
+const {userId,lat,lng}= req.body
+if(!userId || lat == null || lng == null){
     return res.status(400).json({message:"missing data"})
 }
 try{
-    await User.findByIdAndUpdate(driverId,{
+    await User.findByIdAndUpdate(userId,{
         location:{
             lat:lat,
             lng:lng,
