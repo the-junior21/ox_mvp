@@ -10,8 +10,8 @@ if(!passengerId || lat == null || lng == null){
 try{
     await User.findByIdAndUpdate(passengerId,{
         $set:{
-            "location.lat":lat,
-            "location.lng":lng,
+            "location.lat":parseFloat(lat),
+            "location.lng":parseFloat(lng),
             updatedAt: new Date(),
         }
     })
