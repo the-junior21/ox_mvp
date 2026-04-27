@@ -61,8 +61,8 @@ router.post("/", async (req, res) => {
       pickupLocation: {
         name: depart,
         location: {
-          type: "Point",
-          coordinates: [/*pickupLocation.*/ lng, /*pickupLocation.*/ lat],
+          lat:lat,
+          lng:lng,
         },
       },
       destination: {

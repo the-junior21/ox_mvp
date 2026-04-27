@@ -9,11 +9,12 @@ if(!userId || lat == null || lng == null){
 }
 try{
     await User.findByIdAndUpdate(userId,{
-        location:{
-            lat:lat,
-            lng:lng,
-        },
-        updatedAt: new Date(),
+        $set:{
+
+            "location.lat":lat,
+            "location.lng":lng,
+            updatedAt: new Date(),
+        }
     })
     res.json({success:true})
 }catch (err){

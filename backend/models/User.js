@@ -33,10 +33,5 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// 🔥 THIS index is now VALID
-UserSchema.index(
-  { location: "2dsphere" }
-);
-
 export default mongoose.models.User ||
   mongoose.model("User", UserSchema);
