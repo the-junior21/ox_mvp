@@ -11,7 +11,7 @@ import updateDriverLocation from "./routes/driver/location.js";
 import updatePassengerLocation from "./routes/passengerLocation/location.js";
 import nearbyDrivers from "./routes/driver/nearby.js";
 import rideRequest from "./routes/rideRequest.js";
-import rideRequestId from "./routes/rideRequestId/:id.js";
+import rideRequestId from "./routes/rideRequestId.js";
 import saveDriverPushToken from './routes/driver/savePushToken.js'
 import saveOneSignalId from "./routes/saveOneSignalId.js"
 import { createServer } from "http";
